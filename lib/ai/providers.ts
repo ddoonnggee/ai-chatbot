@@ -4,7 +4,7 @@ import {
   wrapLanguageModel,
 } from 'ai';
 import { xai } from '@ai-sdk/xai';
-import { openai } from '@ai-sdk/openai';
+import { deepseek } from '@ai-sdk/deepseek';
 import {
   artifactModel,
   chatModel,
@@ -22,6 +22,23 @@ export const myProvider = isTestEnvironment
         'artifact-model': artifactModel,
       },
     })
+  // OpenAI 配置 (已注释)
+  // : customProvider({
+  //     languageModels: {
+  //       'chat-model': openai('gpt-4o'),
+  //       'chat-model-reasoning': wrapLanguageModel({
+  //         model: openai('o1-preview'),
+  //         middleware: extractReasoningMiddleware({ tagName: 'think' }),
+  //       }),
+  //       'title-model': openai('gpt-4o-mini'),
+  //       'artifact-model': openai('gpt-4o'),
+  //     },
+  //     imageModels: {
+  //       'small-model': openai.imageModel('dall-e-3'),
+  //     },
+  //   });
+  
+  // xAI 配置 (已注释)
   // : customProvider({
   //     languageModels: {
   //       'chat-model': xai('grok-2-vision-1212'),
@@ -36,14 +53,16 @@ export const myProvider = isTestEnvironment
   //       'small-model': xai.imageModel('grok-2-image'),
   //     },
   //   });
+  
+  // DeepSeek 配置 (当前使用)
   : customProvider({
       languageModels: {
-        'chat-model': openai('gpt-4o'),
+        'chat-model': deepseek('deepseek-chat'),
         'chat-model-reasoning': wrapLanguageModel({
-          model: openai('gpt-4o'),
+          model: deepseek('deepseek-reasoner'),
           middleware: extractReasoningMiddleware({ tagName: 'think' }),
         }),
-        'title-model': openai('gpt-4o'),
-        'artifact-model': openai('gpt-4o'),
+        'title-model': deepseek('deepseek-chat'),
+        'artifact-model': deepseek('deepseek-chat'),
       },
     });
