@@ -71,6 +71,17 @@ export const {
       },
     }),
   ],
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "none",  // 跨站 iframe 需要
+        secure: true,      // 必须 HTTPS
+        path: "/",
+      },
+    },
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
