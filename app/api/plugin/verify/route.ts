@@ -102,17 +102,25 @@ export async function POST(request: NextRequest) {
       }
       
       // 使用应用配置中的域名列表进行校验
-      const isAllowed = appConfig.allowedDomains.some(allowedDomain => {
+      interface DomainMatchConfig {
+        allowedDomains: string[];
+      }
+
+      interface DomainCheckResult {
+        isAllowed: boolean;
+      }
+
+      const isAllowed: boolean = appConfig.allowedDomains.some((allowedDomain: string): boolean => {
         if (allowedDomain === finalHostDomain) {
           return true;
         }
         
         if (allowedDomain.startsWith('*.')) {
-          const baseDomain = allowedDomain.substring(2);
+          const baseDomain: string = allowedDomain.substring(2);
           try {
-            const domainUrl = new URL(finalHostDomain);
+            const domainUrl: URL = new URL(finalHostDomain);
             return domainUrl.hostname.endsWith(baseDomain);
-          } catch (e) {
+          } catch (e: unknown) {
             return false;
           }
         }
