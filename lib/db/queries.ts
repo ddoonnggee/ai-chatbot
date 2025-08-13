@@ -27,6 +27,7 @@ import {
   type DBMessage,
   type Chat,
   stream,
+  userApp,
 } from './schema';
 import type { ArtifactKind } from '@/components/artifact';
 import { generateUUID } from '../utils';
@@ -534,5 +535,43 @@ export async function getStreamIdsByChatId({ chatId }: { chatId: string }) {
       'bad_request:database',
       'Failed to get stream ids by chat id',
     );
+  }
+}
+
+export async function getUserByEmail(email: string) {
+  try {
+    const [existingUser] = await db.select().from(user).where(eq(user.email, email));
+    return existingUser;
+  } catch (error) {
+    throw new ChatSDKError('bad_request:database', 'Failed to get user by email');
+  }
+}
+
+export async function getUserAppBySlugAndAppId(slug: string, appId: string) {
+  try {
+    const [userAppRecord] = await db.select().from(userApp).where(
+      and(eq(userApp.slug, slug), eq(userApp.appId, appId))
+    );
+    return userAppRecord;
+  } catch (error) {
+    throw new ChatSDKError('bad_request:database', 'Failed to get user app record');
+  }
+}
+
+export async function createUserApp(data: {
+  userId: string;
+  slug: string;
+  appId: string;
+}) {
+  try {
+    return await db.insert(userApp).values({
+      userId: data.userId,
+      slug: data.slug,
+      appId: data.appId,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }).returning();
+  } catch (error) {
+    throw new ChatSDKError('bad_request:database', 'Failed to create user app record');
   }
 }

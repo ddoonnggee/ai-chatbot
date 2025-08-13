@@ -5,6 +5,25 @@ import { guestRegex, isDevelopmentEnvironment } from './lib/constants';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // 跳过认证的路径 - 添加更多公共路径
+  const publicPaths = [
+    '/api/plugin/sdk',
+    '/api/plugin/verify',
+    '/api/plugin/token',
+    '/embed',
+    '/login',
+    '/register',
+    '/ai-chat.js', // 添加 JS SDK 文件
+    '/api/auth', // 添加认证相关 API
+    '/_next', // 添加 Next.js 内部路径
+    '/favicon.ico', // 添加 favicon
+  ];
+
+  // 如果是公共路径，直接放行
+  if (publicPaths.some((path) => pathname.startsWith(path))) {
+    return NextResponse.next();
+  }
+
   /*
    * Playwright starts the dev server and requires a 200 status to
    * begin the tests, so this ensures that the tests can start
@@ -47,13 +66,6 @@ export const config = {
     '/api/:path*',
     '/login',
     '/register',
-
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
-     */
-    '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.gif$|.*\\.svg$|.*\\.ico$|ai-chat\\.js).*)',
   ],
 };
