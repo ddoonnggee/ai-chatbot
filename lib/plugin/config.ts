@@ -25,7 +25,7 @@ export const APP_CONFIGS = {
 };
 
 export function getAppConfig(appId: string) {
-  return APP_CONFIGS[appId] || null;
+  return APP_CONFIGS[appId as keyof typeof APP_CONFIGS] || null;
 }
 
 export function isAllowedDomain(appId: string, domain: string): boolean {
