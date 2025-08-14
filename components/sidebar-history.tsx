@@ -164,7 +164,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
     return (
       <SidebarGroup>
         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-          Today
+          今日
         </div>
         <SidebarGroupContent>
           <div className="flex flex-col">
@@ -219,7 +219,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     {groupedChats.today.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Today
+                          今天
                         </div>
                         {groupedChats.today.map((chat) => (
                           <ChatItem
@@ -239,7 +239,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     {groupedChats.yesterday.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Yesterday
+                          昨天
                         </div>
                         {groupedChats.yesterday.map((chat) => (
                           <ChatItem
@@ -259,7 +259,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     {groupedChats.lastWeek.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Last 7 days
+                          最近 7 天
                         </div>
                         {groupedChats.lastWeek.map((chat) => (
                           <ChatItem
@@ -279,7 +279,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     {groupedChats.lastMonth.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Last 30 days
+                          最近 30 天
                         </div>
                         {groupedChats.lastMonth.map((chat) => (
                           <ChatItem
@@ -299,7 +299,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     {groupedChats.older.length > 0 && (
                       <div>
                         <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Older than last month
+                          一个月以前
                         </div>
                         {groupedChats.older.map((chat) => (
                           <ChatItem
@@ -330,14 +330,14 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
 
           {hasReachedEnd ? (
             <div className="px-2 text-zinc-500 w-full flex flex-row justify-center items-center text-sm gap-2 mt-8">
-              You have reached the end of your chat history.
+              您已到达聊天记录的末尾。
             </div>
           ) : (
             <div className="p-2 text-zinc-500 dark:text-zinc-400 flex flex-row gap-2 items-center mt-8">
               <div className="animate-spin">
                 <LoaderIcon />
               </div>
-              <div>Loading Chats...</div>
+              <div>加载聊天记录中...</div>
             </div>
           )}
         </SidebarGroupContent>

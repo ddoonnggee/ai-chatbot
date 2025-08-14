@@ -60,7 +60,7 @@ export function PureMessageActions({
               <CopyIcon />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Copy</TooltipContent>
+          <TooltipContent>复制</TooltipContent>
         </Tooltip>
 
         <Tooltip>
@@ -113,7 +113,7 @@ export function PureMessageActions({
               <ThumbUpIcon />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Upvote Response</TooltipContent>
+          <TooltipContent>喜欢</TooltipContent>
         </Tooltip>
 
         <Tooltip>
@@ -166,7 +166,7 @@ export function PureMessageActions({
               <ThumbDownIcon />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Downvote Response</TooltipContent>
+          <TooltipContent>不喜欢</TooltipContent>
         </Tooltip>
       </div>
     </TooltipProvider>

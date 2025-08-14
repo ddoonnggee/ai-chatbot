@@ -62,7 +62,7 @@ const PureChatItem = ({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent side="bottom" align="end">
-          <DropdownMenuSub>
+          {/* <DropdownMenuSub>
             <DropdownMenuSubTrigger className="cursor-pointer">
               <ShareIcon />
               <span>Share</span>
@@ -97,14 +97,14 @@ const PureChatItem = ({
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
-          </DropdownMenuSub>
+          </DropdownMenuSub> */}
 
           <DropdownMenuItem
             className="cursor-pointer text-destructive focus:bg-destructive/15 focus:text-destructive dark:text-red-500"
             onSelect={() => onDelete(chat.id)}
           >
             <TrashIcon />
-            <span>Delete</span>
+            <span>删除</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
