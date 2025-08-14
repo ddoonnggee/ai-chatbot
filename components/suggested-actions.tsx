@@ -20,24 +20,24 @@ function PureSuggestedActions({
 }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: 'What are the advantages',
-      label: 'of using Next.js?',
-      action: 'What are the advantages of using Next.js?',
+      title: '在一个新项目中',
+      label: '应该如何评估和选择技术栈？',
+      action: '在一个新项目中，应该如何评估和选择技术栈？',
     },
     {
-      title: 'Write code to',
-      label: `demonstrate djikstra's algorithm`,
-      action: `Write code to demonstrate djikstra's algorithm`,
+      title: '有哪些经验或工具',
+      label: `能帮助持续交付高质量代码`,
+      action: `有哪些经验或工具能帮助持续交付高质量代码？`,
     },
     {
-      title: 'Help me write an essay',
-      label: `about silicon valley`,
-      action: `Help me write an essay about silicon valley`,
+      title: '遇到系统性能瓶颈时',
+      label: `通常如何定位问题并进行优化？`,
+      action: `遇到系统性能瓶颈时，通常如何定位问题并进行优化？`,
     },
     {
-      title: 'What is the weather',
-      label: 'in San Francisco?',
-      action: 'What is the weather in San Francisco?',
+      title: '面对不熟悉的新技术或框架',
+      label: '通常怎么快速上手并应用到实际项目中？',
+      action: '面对不熟悉的新技术或框架，通常怎么快速上手并应用到实际项目中？',
     },
   ];
 
