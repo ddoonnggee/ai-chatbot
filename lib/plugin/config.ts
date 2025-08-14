@@ -13,6 +13,15 @@ export const APP_CONFIGS = {
     name: 'ABC 客户端',
     description: '测试客户端配置'
   },
+  'client-learnku': {
+    secret: 'learnku-secret-123',
+    allowedDomains: [
+      'http://learnku.fangchangkemao.com/',
+      'https://learnku.fangchangkemao.com/'
+    ],
+    name: 'learnku 客户端',
+    description: 'learnku'
+  },
   'client-test': {
     secret: 'test-secret-456',
     allowedDomains: [
@@ -31,18 +40,18 @@ export function getAppConfig(appId: string) {
 export function isAllowedDomain(appId: string, domain: string): boolean {
   const config = getAppConfig(appId);
   if (!config) return false;
-  
+
   return config.allowedDomains.some(allowedDomain => {
     if (allowedDomain === domain) {
       return true;
     }
-    
+
     if (allowedDomain.startsWith('*.')) {
       const baseDomain = allowedDomain.substring(2);
       const domainUrl = new URL(domain);
       return domainUrl.hostname.endsWith(baseDomain);
     }
-    
+
     return false;
   });
 }
