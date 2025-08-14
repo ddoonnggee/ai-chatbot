@@ -222,6 +222,7 @@ export default function PluginTestPage() {
             >
               <option value="client-test">client-test (测试客户端)</option>
               <option value="client-abc">client-abc (ABC 客户端)</option>
+              <option value="client-learnku">client-learnku (learnku 客户端)</option>
             </select>
             <p className="text-xs text-gray-500 mt-1">
               选择已配置的应用ID，授权域名将从应用配置中获取
