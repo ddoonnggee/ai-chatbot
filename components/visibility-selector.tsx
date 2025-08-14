@@ -59,6 +59,7 @@ export function VisibilitySelector({
     [visibilityType],
   );
 
+  return null;
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger

@@ -55,6 +55,8 @@ export const register = async (
   _: RegisterActionState,
   formData: FormData,
 ): Promise<RegisterActionState> => {
+  // 关闭注册
+  return { status: 'failed' };
   try {
     const validatedData = authFormSchema.parse({
       email: formData.get('email'),

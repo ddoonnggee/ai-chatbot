@@ -34,13 +34,13 @@ export function SidebarUserNav({ user }: { user: User }) {
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          {/* <DropdownMenuTrigger asChild> */}
             {status === 'loading' ? (
               <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent bg-background data-[state=open]:text-sidebar-accent-foreground h-10 justify-between">
                 <div className="flex flex-row gap-2">
                   <div className="size-6 bg-zinc-500/30 rounded-full animate-pulse" />
                   <span className="bg-zinc-500/30 text-transparent rounded-md animate-pulse">
-                    Loading auth status
+                    正在加载身份验证状态
                   </span>
                 </div>
                 <div className="animate-spin text-zinc-500">
@@ -62,10 +62,10 @@ export function SidebarUserNav({ user }: { user: User }) {
                 <span data-testid="user-email" className="truncate">
                   {isGuest ? 'Guest' : user?.email}
                 </span>
-                <ChevronUp className="ml-auto" />
+                {/* <ChevronUp className="ml-auto" /> */}
               </SidebarMenuButton>
             )}
-          </DropdownMenuTrigger>
+          {/* </DropdownMenuTrigger> */}
           <DropdownMenuContent
             data-testid="user-nav-menu"
             side="top"
