@@ -16,8 +16,8 @@ export const APP_CONFIGS = {
   'client-learnku': {
     secret: 'learnku-secret-123',
     allowedDomains: [
-      'http://learnku.fangchangkemao.com/',
-      'https://learnku.fangchangkemao.com/'
+      'http://learnku.fangchangkemao.com',
+      'https://learnku.fangchangkemao.com'
     ],
     name: 'learnku 客户端',
     description: 'learnku'
