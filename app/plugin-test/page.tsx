@@ -151,7 +151,7 @@ export default function PluginTestPage() {
       alert('请先生成 Token');
       return;
     }
-    const embedUrl = `/embed?token=${encodeURIComponent(token)}`;
+    const embedUrl = `/api/embed?token=${encodeURIComponent(token)}`;
     const newWindow = window.open(embedUrl, '_blank', 'width=800,height=700,menubar=no,toolbar=no,location=no,status=no');
     
     if (!newWindow) {
@@ -426,7 +426,7 @@ export default function PluginTestPage() {
               </button>
               <button
                 onClick={() => {
-                  const embedUrl = `${window.location.origin}/embed?token=${encodeURIComponent(token)}`;
+                  const embedUrl = `${window.location.origin}/api/embed?token=${encodeURIComponent(token)}`;
                   navigator.clipboard.writeText(embedUrl);
                   alert('嵌入链接已复制到剪贴板');
                 }}
@@ -470,7 +470,7 @@ export default function PluginTestPage() {
           
           {token && (
             <a
-              href={`/embed?token=${encodeURIComponent(token)}`}
+              href={`/api/embed?token=${encodeURIComponent(token)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600"
@@ -564,7 +564,7 @@ export default function PluginTestPage() {
         
         <pre className="bg-gray-50 p-4 rounded border text-sm overflow-x-auto">
 {`<iframe 
-  src="${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'}/embed?token=YOUR_TOKEN_HERE"
+  src="${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'}/api/embed?token=YOUR_TOKEN_HERE"
   width="100%" 
   height="600"
   frameborder="0">
@@ -576,7 +576,7 @@ export default function PluginTestPage() {
             <h3 className="font-medium mb-2">实时嵌入预览:</h3>
             <div className="border rounded-lg overflow-hidden">
               <iframe
-                src={`/embed?token=${encodeURIComponent(token)}`}
+                src={`/api/embed?token=${encodeURIComponent(token)}`}
                 width="100%"
                 height="500"
                 frameBorder="0"

@@ -70,6 +70,23 @@ export const {
         return { ...guestUser, type: 'guest' };
       },
     }),
+    // 新增：通过邮箱直接登录（无需密码）
+    Credentials({
+      id: 'email-login',
+      credentials: {},
+      async authorize({ email }: any) {
+        if (!email) return null;
+        
+        const users = await getUser(email);
+        
+        if (users.length === 0) {
+          return null;
+        }
+
+        const [user] = users;
+        return { ...user, type: 'regular' };
+      },
+    }),
   ],
   callbacks: {
     async jwt({ token, user }) {

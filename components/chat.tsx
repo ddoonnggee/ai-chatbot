@@ -126,22 +126,16 @@ export function Chat({
     setMessages,
   });
 
-  // 检测是否在嵌入模式中
-  const isEmbedMode = typeof window !== 'undefined' && window.parent !== window;
-
   return (
     <>
       <div className="flex flex-col min-w-0 h-dvh bg-background">
-        {/* 在嵌入模式下简化或隐藏头部 */}
-        {!isEmbedMode && (
-          <ChatHeader
-            chatId={id}
-            selectedModelId={initialChatModel}
-            selectedVisibilityType={initialVisibilityType}
-            isReadonly={isReadonly}
-            session={session}
-          />
-        )}
+        <ChatHeader
+          chatId={id}
+          selectedModelId={initialChatModel}
+          selectedVisibilityType={initialVisibilityType}
+          isReadonly={isReadonly}
+          session={session}
+        />
 
         <Messages
           chatId={id}
@@ -173,25 +167,22 @@ export function Chat({
         </form>
       </div>
 
-      {/* 在嵌入模式下隐藏 Artifact */}
-      {!isEmbedMode && (
-        <Artifact
-          chatId={id}
-          input={input}
-          setInput={setInput}
-          status={status}
-          stop={stop}
-          attachments={attachments}
-          setAttachments={setAttachments}
-          sendMessage={sendMessage}
-          messages={messages}
-          setMessages={setMessages}
-          regenerate={regenerate}
-          votes={votes}
-          isReadonly={isReadonly}
-          selectedVisibilityType={visibilityType}
-        />
-      )}
+      <Artifact
+        chatId={id}
+        input={input}
+        setInput={setInput}
+        status={status}
+        stop={stop}
+        attachments={attachments}
+        setAttachments={setAttachments}
+        sendMessage={sendMessage}
+        messages={messages}
+        setMessages={setMessages}
+        regenerate={regenerate}
+        votes={votes}
+        isReadonly={isReadonly}
+        selectedVisibilityType={visibilityType}
+      />
     </>
   );
 }

@@ -5,7 +5,6 @@
   const AIChat = {
     // 配置选项
     config: {
-      apiBase: '',
       appId: '',
       token: '',
       showAcceptButton: true,
@@ -23,6 +22,7 @@
     _iframe: null,
     _container: null,
     _isOpen: false,
+    _apiBase: '',
 
     // 初始化方法
     init: function(options = {}) {
@@ -34,32 +34,28 @@
       // 合并配置
       this.config = Object.assign({}, this.config, options);
       
-      // 设置 API 基础路径 - 修复获取逻辑
-      if (!this.config.apiBase) {
-        // 首先尝试从当前脚本的 src 获取
-        const scripts = document.getElementsByTagName('script');
-        for (let script of scripts) {
-          if (script.src && script.src.includes('ai-chat.js')) {
-            try {
-              const url = new URL(script.src);
-              this.config.apiBase = url.origin;
-              console.log('从脚本URL获取apiBase:', this.config.apiBase);
-              break;
-            } catch (e) {
-              console.warn('解析脚本URL失败:', e);
-            }
+      // 直接从当前脚本的 src 获取 API 基础路径
+      const scripts = document.getElementsByTagName('script');
+      for (let script of scripts) {
+        if (script.src && script.src.includes('ai-chat.js')) {
+          try {
+            const url = new URL(script.src);
+            this._apiBase = url.origin;
+            console.log('从脚本URL获取apiBase:', this._apiBase);
+            break;
+          } catch (e) {
+            console.warn('解析脚本URL失败:', e);
           }
         }
-        
-        // 如果还没有找到，使用默认的本地服务地址
-        if (!this.config.apiBase) {
-          this.config.apiBase = 'http://localhost:3000';
-          console.log('使用默认apiBase:', this.config.apiBase);
-        }
+      }
+      
+      // 如果还没有找到，抛出错误
+      if (!this._apiBase) {
+        throw new Error('无法获取API基础路径，请确保正确加载ai-chat.js脚本');
       }
 
       console.log('AIChat配置:', {
-        apiBase: this.config.apiBase,
+        apiBase: this._apiBase,
         appId: this.config.appId,
         hasToken: !!this.config.token
       });
@@ -154,8 +150,8 @@
         background: white;
       `;
       
-      // 直接构建 embed URL，不在这里校验 token
-      const embedUrl = `${this.config.apiBase}/embed?token=${encodeURIComponent(this.config.token)}`;
+      // 使用内部的 _apiBase 构建 embed URL
+      const embedUrl = `${this._apiBase}/api/embed?token=${encodeURIComponent(this.config.token)}`;
       console.log('构建的embed URL:', embedUrl);
       this._iframe.src = embedUrl;
 
@@ -197,8 +193,8 @@
 
       // 监听来自 iframe 的消息
       window.addEventListener('message', (event) => {
-        // 检查消息来源
-        if (event.origin !== this.config.apiBase) return;
+        // 检查消息来源 - 使用内部的 _apiBase
+        if (event.origin !== this._apiBase) return;
 
         const { type, action, data } = event.data;
         
@@ -212,7 +208,7 @@
             this._iframe.contentWindow.postMessage({
               type: 'HOST_DOMAIN_RESPONSE',
               domain: hostDomain
-            }, this.config.apiBase);
+            }, this._apiBase);
           }
         }
         
@@ -287,7 +283,7 @@
             type: 'ai-chat-command',
             action: 'send-message',
             data: { message }
-          }, this.config.apiBase);
+          }, this._apiBase);
           console.log('发送消息:', message);
         } catch (error) {
           console.error('发送消息失败:', error);
@@ -305,6 +301,7 @@
       this._iframe = null;
       this._container = null;
       this._isOpen = false;
+      this._apiBase = '';
       return this;
     }
   };
