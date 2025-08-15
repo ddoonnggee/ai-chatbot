@@ -556,40 +556,6 @@ export default function PluginTestPage() {
           </div>
         )}
       </div>
-
-      {/* <div className="bg-white rounded-lg shadow-md p-6 mt-6">
-        <h2 className="text-xl font-semibold mb-4">4. iframe 集成示例</h2>
-        <p className="text-gray-600 mb-4">
-          如果您更喜欢使用 iframe 方式集成：
-        </p>
-        
-        <pre className="bg-gray-50 p-4 rounded border text-sm overflow-x-auto">
-{`<iframe 
-  src="${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'}/api/embed?token=YOUR_TOKEN_HERE"
-  width="100%" 
-  height="600"
-  frameborder="0">
-</iframe>`}
-        </pre>
-
-        {token && (
-          <div className="mt-4">
-            <h3 className="font-medium mb-2">实时嵌入预览:</h3>
-            <div className="border rounded-lg overflow-hidden">
-              <iframe
-                src={`/api/embed?token=${encodeURIComponent(token)}`}
-                width="100%"
-                height="500"
-                frameBorder="0"
-                className="w-full"
-              />
-            </div>
-            <p className="text-sm text-gray-600 mt-2">
-              这是一个实时的嵌入式聊天界面预览，功能完全可用。
-            </p>
-          </div>
-        )}
-      </div> */}
     </div>
   );
 }

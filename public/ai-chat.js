@@ -143,6 +143,7 @@
 
       // 创建 iframe
       this._iframe = document.createElement('iframe');
+      this._iframe.id = 'aiFrame';
       this._iframe.style.cssText = `
         width: 100%;
         height: calc(100% - 80px);
@@ -193,6 +194,7 @@
 
       // 监听来自 iframe 的消息
       window.addEventListener('message', (event) => {
+        console.log(event);
         // 检查消息来源 - 使用内部的 _apiBase
         if (event.origin !== this._apiBase) return;
 
@@ -232,11 +234,11 @@
       });
 
       // 点击外部关闭
-      document.addEventListener('click', (event) => {
-        if (this._isOpen && !this._container.contains(event.target)) {
-          this.close();
-        }
-      });
+      // document.addEventListener('click', (event) => {
+      //   if (this._isOpen && !this._container.contains(event.target)) {
+      //     this.close();
+      //   }
+      // });
     },
 
     // 打开聊天窗口
@@ -280,9 +282,9 @@
       if (this._iframe && this._iframe.contentWindow) {
         try {
           this._iframe.contentWindow.postMessage({
-            type: 'ai-chat-command',
+            type: 'ask-ai',
             action: 'send-message',
-            data: { message }
+            text: message
           }, this._apiBase);
           console.log('发送消息:', message);
         } catch (error) {

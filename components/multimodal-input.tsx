@@ -28,6 +28,7 @@ import { ArrowDown } from 'lucide-react';
 import { useScrollToBottom } from '@/hooks/use-scroll-to-bottom';
 import type { VisibilityType } from './visibility-selector';
 import type { Attachment, ChatMessage } from '@/lib/types';
+import { text } from 'stream/consumers';
 
 function PureMultimodalInput({
   chatId,
@@ -58,6 +59,8 @@ function PureMultimodalInput({
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
+  // 新增一个状态，记录是否已经发送过第一条消息
+  const [hasSentFirstMessage, setHasSentFirstMessage] = useState(false);
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -108,9 +111,9 @@ function PureMultimodalInput({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadQueue, setUploadQueue] = useState<Array<string>>([]);
 
-  const submitForm = useCallback(() => {
+  const submitForm = useCallback((textOverride?: string) => {
     window.history.replaceState({}, '', `/chat/${chatId}`);
-
+    input = textOverride || input;
     sendMessage({
       role: 'user',
       parts: [
@@ -203,9 +206,36 @@ function PureMultimodalInput({
 
   useEffect(() => {
     if (status === 'submitted') {
-      scrollToBottom();
+      if (hasSentFirstMessage) {
+        // scrollToBottom();
+      } else {
+        setHasSentFirstMessage(true); // 第一次发送后标记
+      }
     }
-  }, [status, scrollToBottom]);
+  }, [status, scrollToBottom, hasSentFirstMessage]);
+
+  useEffect(() => {
+    const handler = (event: MessageEvent) => {
+      const { type, text } = event.data || {};
+      if (type === "ask-ai" && text) {
+        setInput(text);   // 更新输入框
+        submitForm(text); // 调用发送
+      }
+    };
+    window.addEventListener("message", handler);
+    return () => window.removeEventListener("message", handler);
+  }, [submitForm, setInput]);
+
+  useEffect(() => {
+    if (status === 'ready') {
+      // 回复完成后通知宿主页面
+      window.parent.postMessage(
+        { type: 'ai-chat-action', action: 'answer-complete' },
+        '*' // 也可以改成宿主页面的 origin 以提高安全性
+      );
+    }
+  }, [status]);
+
 
   return (
     <div className="relative w-full flex flex-col gap-4">
