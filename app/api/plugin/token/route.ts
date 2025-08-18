@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       userId: userId || null,
       allowedDomains: appConfig.allowedDomains, // 包含允许的域名列表
       iat: now,
-      exp: now + (24 * 60 * 60) // 24小时后过期
+      exp: now + (7 * 24 * 60 * 60) // 24小时后过期
     };
 
     // 创建 JWT header

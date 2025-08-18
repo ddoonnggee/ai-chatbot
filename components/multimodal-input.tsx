@@ -29,6 +29,7 @@ import { useScrollToBottom } from '@/hooks/use-scroll-to-bottom';
 import type { VisibilityType } from './visibility-selector';
 import type { Attachment, ChatMessage } from '@/lib/types';
 import { text } from 'stream/consumers';
+import { myProvider } from '@/lib/ai/providers';
 
 function PureMultimodalInput({
   chatId,
@@ -336,7 +337,7 @@ function PureMultimodalInput({
       />
 
       <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
-        {/* <AttachmentsButton fileInputRef={fileInputRef} status={status} /> */}
+        <AttachmentsButton fileInputRef={fileInputRef} status={status} />
       </div>
 
       <div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
@@ -374,6 +375,13 @@ function PureAttachmentsButton({
   fileInputRef: React.MutableRefObject<HTMLInputElement | null>;
   status: UseChatHelpers<ChatMessage>['status'];
 }) {
+  const modelInfo = myProvider.languageModel('title-model');
+  // console.log(modelInfo?.config?.provider);
+  // provider 是 deepseek 就隐藏按钮
+  if (modelInfo?.config?.provider?.includes('deepseek')) {
+    return null;
+  }
+
   return (
     <Button
       data-testid="attachments-button"

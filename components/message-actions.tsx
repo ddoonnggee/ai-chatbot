@@ -3,7 +3,7 @@ import { useCopyToClipboard } from 'usehooks-ts';
 
 import type { Vote } from '@/lib/db/schema';
 
-import { CopyIcon, ThumbDownIcon, ThumbUpIcon } from './icons';
+import { CopyIcon, ThumbDownIcon, ThumbUpIcon, CheckedSquare } from './icons';
 import { Button } from './ui/button';
 import {
   Tooltip,
@@ -49,12 +49,43 @@ export function PureMessageActions({
                   .trim();
 
                 if (!textFromParts) {
-                  toast.error("There's no text to copy!");
+                  toast.error("没有文本需要采纳!");
+                  return;
+                }
+
+                // 实现与宿主页面通信
+                window.parent.postMessage(
+                  { type: 'ai-chat-action', action: 'answer-accept', data : { text: textFromParts } },
+                  '*' // 也可以改成宿主页面的 origin 以提高安全性
+                );
+                toast.success('采纳成功!');
+              }}
+            >
+              <CheckedSquare />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>采纳</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              className="py-1 px-2 h-fit text-muted-foreground"
+              variant="outline"
+              onClick={async () => {
+                const textFromParts = message.parts
+                  ?.filter((part) => part.type === 'text')
+                  .map((part) => part.text)
+                  .join('\n')
+                  .trim();
+
+                if (!textFromParts) {
+                  toast.error("没有文本需要复制！");
                   return;
                 }
 
                 await copyToClipboard(textFromParts);
-                toast.success('Copied to clipboard!');
+                toast.success('复制成功!');
               }}
             >
               <CopyIcon />
@@ -81,7 +112,7 @@ export function PureMessageActions({
                 });
 
                 toast.promise(upvote, {
-                  loading: 'Upvoting Response...',
+                  loading: '操作中...',
                   success: () => {
                     mutate<Array<Vote>>(
                       `/api/vote?chatId=${chatId}`,
@@ -104,9 +135,9 @@ export function PureMessageActions({
                       { revalidate: false },
                     );
 
-                    return 'Upvoted Response!';
+                    return '操作完成!';
                   },
-                  error: 'Failed to upvote response.',
+                  error: '操作失败.',
                 });
               }}
             >
@@ -134,7 +165,7 @@ export function PureMessageActions({
                 });
 
                 toast.promise(downvote, {
-                  loading: 'Downvoting Response...',
+                  loading: '操作中...',
                   success: () => {
                     mutate<Array<Vote>>(
                       `/api/vote?chatId=${chatId}`,
@@ -157,9 +188,9 @@ export function PureMessageActions({
                       { revalidate: false },
                     );
 
-                    return 'Downvoted Response!';
+                    return '操作成功!';
                   },
-                  error: 'Failed to downvote response.',
+                  error: '操作失败.',
                 });
               }}
             >
