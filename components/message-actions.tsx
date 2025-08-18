@@ -3,7 +3,7 @@ import { useCopyToClipboard } from 'usehooks-ts';
 
 import type { Vote } from '@/lib/db/schema';
 
-import { CopyIcon, ThumbDownIcon, ThumbUpIcon, CheckedSquare } from './icons';
+import { CopyIcon, ThumbDownIcon, ThumbUpIcon, SummarizeIcon } from './icons';
 import { Button } from './ui/button';
 import {
   Tooltip,
@@ -61,7 +61,7 @@ export function PureMessageActions({
                 toast.success('采纳成功!');
               }}
             >
-              <CheckedSquare />
+              <SummarizeIcon />
             </Button>
           </TooltipTrigger>
           <TooltipContent>采纳</TooltipContent>
