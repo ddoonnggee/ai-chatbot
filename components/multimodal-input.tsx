@@ -376,9 +376,9 @@ function PureAttachmentsButton({
   status: UseChatHelpers<ChatMessage>['status'];
 }) {
   const modelInfo = myProvider.languageModel('title-model');
-  // console.log(modelInfo?.config?.provider);
+  // console.log(modelInfo?.modelId);
   // provider 是 deepseek 就隐藏按钮
-  if (modelInfo?.config?.provider?.includes('deepseek')) {
+  if (modelInfo?.modelId?.includes('deepseek')) {
     return null;
   }
 
