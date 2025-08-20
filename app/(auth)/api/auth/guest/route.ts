@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
   // 关闭游客方式
-  return NextResponse.json({ error: 'Guest access disabled' }, { status: 403 });
+  // return NextResponse.json({ error: 'Guest access disabled' }, { status: 403 });
 
   const { searchParams } = new URL(request.url);
   const redirectUrl = searchParams.get('redirectUrl') || '/';
