@@ -207,11 +207,11 @@ function PureMultimodalInput({
 
   useEffect(() => {
     if (status === 'submitted') {
-      if (hasSentFirstMessage) {
-        // scrollToBottom();
-      } else {
-        setHasSentFirstMessage(true); // 第一次发送后标记
-      }
+      // if (hasSentFirstMessage) {
+        scrollToBottom();
+      // } else {
+        // setHasSentFirstMessage(true); // 第一次发送后标记
+      // }
     }
   }, [status, scrollToBottom, hasSentFirstMessage]);
 
