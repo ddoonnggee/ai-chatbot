@@ -10,11 +10,11 @@ export async function middleware(request: NextRequest) {
     '/api/plugin/sdk',
     '/api/plugin/verify',
     '/api/plugin/token',
-    '/embed',
+    '/plugin-test',
+    '/api/embed',
     '/login',
     '/register',
     '/ai-chat.js', // 添加 JS SDK 文件
-    '/api/auth', // 添加认证相关 API
     '/_next', // 添加 Next.js 内部路径
     '/favicon.ico', // 添加 favicon
   ];
@@ -41,7 +41,7 @@ export async function middleware(request: NextRequest) {
     secret: process.env.AUTH_SECRET,
     secureCookie: !isDevelopmentEnvironment,
   });
-
+  // console.log('调试token:', token);
   if (!token) {
     const redirectUrl = encodeURIComponent(request.url);
 
